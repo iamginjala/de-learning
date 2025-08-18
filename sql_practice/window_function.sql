@@ -13,3 +13,7 @@ where rn <=3
 -- Write your PostgreSQL query statement below for  Employees Earning More Than Their Managers
 select e1.name as Employee from employee e1 join employee e2 on e1.managerid = e2.id 
 where e1.salary > e2.salary
+
+-- Write your PostgreSQL query statement below for Rank Scores
+
+select score,DENSE_RANK() OVER(ORDER BY SCORE DESC) AS rank from scores 
