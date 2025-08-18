@@ -17,3 +17,19 @@ where e1.salary > e2.salary
 -- Write your PostgreSQL query statement below for Rank Scores
 
 select score,DENSE_RANK() OVER(ORDER BY SCORE DESC) AS rank from scores 
+
+-- Write your PostgreSQL query statement below for Nth Highest Salary
+
+CREATE OR REPLACE FUNCTION NthHighestSalary(N INT) RETURNS TABLE (Salary INT) AS $$
+BEGIN
+  RETURN QUERY (
+    -- Write your PostgreSQL query statement below.
+    select distinct new.salary from(
+        select *,dense_rank() over (order by e.salary desc) as rn from employee e
+    ) new
+      where new.rn = N
+  );
+END;
+$$ LANGUAGE plpgsql;
+
+ 
