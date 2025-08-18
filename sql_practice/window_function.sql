@@ -10,3 +10,6 @@ from (
 select d.name as department,e.name as employee,e.salary, DENSE_RANK() OVER (partition by d.name ORDER BY E.SALARY desc ) AS RN from employee e join department d on e.departmentid = d.id )
 where rn <=3
 
+-- Write your PostgreSQL query statement below for  Employees Earning More Than Their Managers
+select e1.name as Employee from employee e1 join employee e2 on e1.managerid = e2.id 
+where e1.salary > e2.salary
