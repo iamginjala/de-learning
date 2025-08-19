@@ -66,3 +66,15 @@ scores = np.array([91,55,100,73,82,46])
 
 scores[scores < 60] = 0
 print(scores)
+
+# broadcast
+
+array2 = np.array([[1,2,3,4]])
+array3 = np.array([[1],[2],[3],[4]])
+
+print(array2.shape)
+print(array3.shape)
+
+ar = array3 * array2
+
+print(ar)
