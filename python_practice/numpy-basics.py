@@ -35,3 +35,34 @@ print(array[:2,2:])
 print(array[0])
 
 print(array[:,::-2])
+
+# scalar arithmetic
+
+array = np.array([1,2,3])
+
+print(array+1)
+print(array-2)
+print(array*3)
+print(array/4)
+print(array ** 5)
+
+#vectorized math funcs
+radii = np.array([1,2,3])
+
+## area of circle 
+
+area = np.pi * radii**2
+print(area)
+
+# element wise arithmetic
+
+ar1 = np.array([2,4,6])
+ar2 = np.array([1,3,5])
+print(ar1 ** ar2)
+
+## comparision operators
+
+scores = np.array([91,55,100,73,82,46])
+
+scores[scores < 60] = 0
+print(scores)
