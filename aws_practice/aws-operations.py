@@ -32,12 +32,24 @@ client = boto3.client('s3')  # Uses your CLI-configured us-east-2 region
 # else:
 #     print("No buckets found.")
 
-## list all objects from s3
-response = client.list_objects(Bucket = 'demo-boto3-bucket-harsha-de')
+try:
+    ## list all objects from s3
+    response = client.list_objects(Bucket = 'demo-boto3-bucket-harsha-de')
 
-if response['Contents']:
-    for obj in response['Contents']:
-        print(obj['Key'])
+    if response['Contents']:
+        for obj in response['Contents']:
+            print(obj['Key'])
+    else:
+        print("No objects found")
 
-## download_file 
-client.download_file('demo-boto3-bucket-harsha-de','hello.txt',full_path)
+    ## download_file 
+    client.download_file('demo-boto3-bucket-harsha-de','hello.txt',full_path)
+    print(f'file downloaded sucessfully to path {os.path.exists(full_path)}')
+
+except ClientError as e:
+    print(f"❌ AWS Error: {e}")
+except FileNotFoundError:
+    print(f"local directory doesn't exist {folder}")
+except Exception as e:
+    print(f'unexpected error {e}')
+
