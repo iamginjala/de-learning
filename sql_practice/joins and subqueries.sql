@@ -26,3 +26,19 @@ from city c
 join country 
 on c.countrycode = country.code
 where country.continent = 'Asia'
+
+
+-- Given the CITY and COUNTRY tables, query the names of all cities where the CONTINENT is 'Africa'.
+select c.name 
+from city c
+join country co
+on c.countrycode = co.code
+where co.continent = 'Africa'
+
+--Given the CITY and COUNTRY tables, query the names of all the continents (COUNTRY.Continent) and their respective average city populations (CITY.Population) rounded down to the nearest integer.
+
+select co.continent, floor(avg(c.population))
+from city c
+join country co
+on c.countrycode = co.code
+group by 1
