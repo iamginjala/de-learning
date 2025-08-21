@@ -18,3 +18,11 @@ FROM bigquery-public-data.new_york.citibike_stations;
 -- the above query can be written using window funtion 
 
 SELECT station_id, num_bikes_available, AVG(num_bikes_available) over() as avg_bike  FROM `bigquery-public-data.new_york.citibike_stations`
+
+--Given the CITY and COUNTRY tables, query the sum of the populations of all cities where the CONTINENT is 'Asia'.
+
+select sum(c.population) 
+from city c 
+join country 
+on c.countrycode = country.code
+where country.continent = 'Asia'
