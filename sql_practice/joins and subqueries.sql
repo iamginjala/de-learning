@@ -58,3 +58,16 @@ Group by 1,2
 Having count(s.challenge_id) > 1
 order by count(s.challenge_id) desc, hacker_id asc ;
 
+
+--The Report 
+
+SELECT 
+  CASE WHEN G.grade >= 8 THEN S.name ELSE NULL END AS name,
+  G.grade,
+  S.marks
+FROM students S
+JOIN grades G ON S.marks BETWEEN G.min_mark AND G.max_mark
+ORDER BY 
+  G.grade DESC,
+  CASE WHEN G.grade >= 8 THEN S.name END ASC,
+  CASE WHEN G.grade < 8 THEN S.marks END ASC;
