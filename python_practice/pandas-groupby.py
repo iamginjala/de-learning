@@ -17,44 +17,44 @@ print(df.columns)
 
 # How many passengers survived and how many did not?
 
-total = df['Survived'].count()
-print(f'Survived passengers: {df["Survived"].sum()}')
-print(f'not survived passengers: {total-df["Survived"].sum()}')
+# total = df['Survived'].count()
+# print(f'Survived passengers: {df["Survived"].sum()}')
+# print(f'not survived passengers: {total-df["Survived"].sum()}')
 
-# What is the average age of passengers?
+# # What is the average age of passengers?
 
-avg_age = df['Age'].mean()
-print(avg_age)
-# What is the distribution of passengers by class (Pclass)?
+# avg_age = df['Age'].mean()
+# print(avg_age)
+# # What is the distribution of passengers by class (Pclass)?
 
-print(df['Pclass'].value_counts())
-# What is the survival rate for male vs female passengers?
+# print(df['Pclass'].value_counts())
+# # What is the survival rate for male vs female passengers?
 
-survial_rate = pd.pivot_table(df,values='Survived',index='Sex',aggfunc='mean')
-print(survial_rate)
+# survial_rate = pd.pivot_table(df,values='Survived',index='Sex',aggfunc='mean')
+# print(survial_rate)
 
-# or using group by
+# # or using group by
 
-survival = df.groupby('Sex')['Survived'].mean()
-print(survival)
+# survival = df.groupby('Sex')['Survived'].mean()
+# print(survival)
 
-# GroupBy & Aggregation
+# # GroupBy & Aggregation
 
-# Calculate the average fare paid by each passenger class.
-print(df.groupby('Pclass')['Fare'].mean())
+# # Calculate the average fare paid by each passenger class.
+# print(df.groupby('Pclass')['Fare'].mean())
 
-# Find the survival rate by passenger class (Pclass).
-print(df.groupby('Pclass')['Survived'].mean())
+# # Find the survival rate by passenger class (Pclass).
+# print(df.groupby('Pclass')['Survived'].mean())
 
-# Calculate the average age of passengers grouped by survival status (Survived).
-print(df.groupby('Survived')['Age'].mean())
-print(df.groupby(['Survived','Sex'])['Age'].mean())
-# Find the number of siblings/spouses (SibSp) and parents/children (Parch) grouped by survival status.
-# print(df.groupby('Survived')['SibSp'].sum())
-# print(df.groupby('Survived')['Parch'].sum())
-print(df.groupby('Survived')[['SibSp', 'Parch']].agg(['count', 'sum', 'mean']).round(2))
-# For each embarkation port (Embarked), calculate the survival rate.
-print(df.groupby('Embarked')['Survived'].mean())
+# # Calculate the average age of passengers grouped by survival status (Survived).
+# print(df.groupby('Survived')['Age'].mean())
+# print(df.groupby(['Survived','Sex'])['Age'].mean())
+# # Find the number of siblings/spouses (SibSp) and parents/children (Parch) grouped by survival status.
+# # print(df.groupby('Survived')['SibSp'].sum())
+# # print(df.groupby('Survived')['Parch'].sum())
+# print(df.groupby('Survived')[['SibSp', 'Parch']].agg(['count', 'sum', 'mean']).round(2))
+# # For each embarkation port (Embarked), calculate the survival rate.
+# print(df.groupby('Embarked')['Survived'].mean())
 
 ## Pivot Tables
 '''pandas.pivot_table(data, values=None, index=None, columns=None, aggfunc='mean',
@@ -62,19 +62,40 @@ print(df.groupby('Embarked')['Survived'].mean())
 '''
 
 # Create a pivot table showing survival rate by Pclass and Sex.
-pt = pd.pivot_table(df,values='Survived',index=['Pclass','Sex'])
-print(pt)
+# pt = pd.pivot_table(df,values='Survived',index=['Pclass','Sex'])
+# print(pt)
 
-# Create a pivot table of average fare grouped by Pclass and Embarked.
-pt2 = pd.pivot_table(df,values='Fare',index=['Pclass','Embarked'])
-#or 
-pt3 = pd.pivot_table(df,values='Fare',index='Pclass',columns='Embarked')
-print(pt3)
-# Create a pivot table of survival counts with margins (totals).
-pt4 = pd.pivot_table(df,values='Survived',index='Sex',columns='Pclass',aggfunc='sum',margins=True)
-print(pt4)
-# Show the average age grouped by both Sex and Pclass using a pivot table.
-pt5 = pd.pivot_table(df,values='Age',index=['Sex','Pclass'])
-print(pt5)
-pt6 = pd.pivot_table(df,values='Age',index='Sex',columns='Pclass')
-print(pt6)
+# # Create a pivot table of average fare grouped by Pclass and Embarked.
+# pt2 = pd.pivot_table(df,values='Fare',index=['Pclass','Embarked'])
+# #or 
+# pt3 = pd.pivot_table(df,values='Fare',index='Pclass',columns='Embarked')
+# print(pt3)
+# # Create a pivot table of survival counts with margins (totals).
+# pt4 = pd.pivot_table(df,values='Survived',index='Sex',columns='Pclass',aggfunc='sum',margins=True)
+# print(pt4)
+# # Show the average age grouped by both Sex and Pclass using a pivot table.
+# pt5 = pd.pivot_table(df,values='Age',index=['Sex','Pclass'])
+# print(pt5)
+# pt6 = pd.pivot_table(df,values='Age',index='Sex',columns='Pclass')
+# print(pt6)
+
+
+## Cross-tabulations
+''' 
+pd.crosstab(index, columns, values=None, aggfunc=None, margins=False, normalize=False)
+
+'''
+
+# Create a cross-tab of Sex vs Survived.
+ct = pd.crosstab(df['Sex'],df['Survived'])
+print(ct)
+# Create a cross-tab of Embarked vs Pclass.
+ct2 = pd.crosstab(df['Embarked'],df['Pclass'])
+print(ct2)
+# Create a cross-tab of Survived vs Pclass and normalize it (percentage).
+ct3 = pd.crosstab(df['Survived'],df['Pclass'],normalize='index')
+print(ct3)
+# Create a cross-tab of Pclass vs Sex vs Survived (multi-level cross-tab).
+
+ct4 = pd.crosstab([df['Sex'],df['Pclass']],df['Survived'])
+print(ct4)
