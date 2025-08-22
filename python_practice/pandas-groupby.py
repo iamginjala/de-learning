@@ -7,7 +7,7 @@ full_path = os.path.join(folder,file)
 df = pd.read_csv(full_path)
 ### Basic Exploration
 
-# # What are the number of rows and columns in the dataset?
+# What are the number of rows and columns in the dataset?
 
 print(df.shape)
 
@@ -100,3 +100,17 @@ print(ct3)
 ct4 = pd.crosstab([df['Sex'],df['Pclass']],df['Survived'])
 print(ct4)
 
+## Advanced / Summary Statistics
+
+# Find the min, max, and mean fare for each passenger class.
+print(df.groupby('Pclass')['Fare'].agg(['min','max','mean']))
+# Compare the median ages of survivors vs non-survivors.
+print(df.groupby('Survived')['Age'].median())
+# Identify which embarkation port had the highest average survival rate.
+print(df.groupby('Embarked')['Survived'].mean())
+# Find the distribution of family size (SibSp + Parch) and see how it affects survival.
+df['familysize'] = df['SibSp']+df['Parch']
+print(df.groupby('familysize')['Survived'].value_counts().unstack())
+# Create a custom summary that shows for each Pclass: average fare, average age, and survival rate.
+
+print(df.groupby('Pclass')[['Fare','Age','Survived']].agg(['mean']))
