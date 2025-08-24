@@ -14,7 +14,7 @@ df = pd.read_csv(full_path)
 # print(df.head())
 
 # Check the number of rows and columns.
-# print(df.shape)
+print(df.shape)
 # check name of the columns
 print(df.columns)
 
