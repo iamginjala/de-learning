@@ -87,3 +87,5 @@ print(f"Date type: {df_cleaned['order_date'].dtype}")
 print(f"Negative quantities: {(df_cleaned['quantity'] < 0).sum()}")
 
 ## 3. Database connection 
+
+conn = sqlite3.connect('sales.db')
