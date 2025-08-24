@@ -19,27 +19,27 @@ df = pd.read_csv(full_path)
 print(df.columns)
 
 # Review data types for each column.
-# print(df.dtypes)
+print(df.dtypes)
 
-# # Identify missing values across columns.
-# print(df.isna().sum())
-# # Look at unique values for categorical fields (region, sales rep, category).
-# regions = df['region'].unique()
-# represantive = df['sales_rep'].value_counts()
-# cate = df['category'].unique()
-# print(regions)
-# print(represantive)
-# print(cate)
+# Identify missing values across columns.
+print(df.isna().sum())
+# Look at unique values for categorical fields (region, sales rep, category).
+regions = df['region'].unique()
+represantive = df['sales_rep'].value_counts()
+cate = df['category'].unique()
+print(regions)
+print(represantive)
+print(cate)
 
-# # Verify numeric fields like quantity, unit price, and total sales for any negative or suspicious values.
-# print((df['quantity'] < 0).sum())
-# print((df['unit_price'] <= 0).sum())
-# print((df['total_sales'] < 0).sum())
-# df['total'] = df['quantity'] * df['unit_price']
-# print(df['total'].equals(df['total_sales']))
-# print(df[df['total'] != df['total_sales']])
-# # Make sure order_id looks unique.
-# print(df['order_id'].nunique())
+# Verify numeric fields like quantity, unit price, and total sales for any negative or suspicious values.
+print((df['quantity'] < 0).sum())
+print((df['unit_price'] <= 0).sum())
+print((df['total_sales'] < 0).sum())
+df['total'] = df['quantity'] * df['unit_price']
+print(df['total'].equals(df['total_sales']))
+print(df[df['total'] != df['total_sales']])
+# Make sure order_id looks unique.
+print(df['order_id'].nunique())
 
 ## data cleaning
 ## droping records with duplicate order_id
@@ -76,5 +76,3 @@ df_cleaned=df_cleaned.dropna(subset=['corrected_date'])
 df_cleaned['order_date'] = df_cleaned['corrected_date']
 # Remove the temporary corrected_date column since you no longer need it
 df_cleaned = df_cleaned.drop('corrected_date', axis=1)
-
-print(df_cleaned.columns)
