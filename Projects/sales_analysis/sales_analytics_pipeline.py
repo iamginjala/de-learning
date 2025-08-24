@@ -76,3 +76,11 @@ df_cleaned=df_cleaned.dropna(subset=['corrected_date'])
 df_cleaned['order_date'] = df_cleaned['corrected_date']
 # Remove the temporary corrected_date column since you no longer need it
 df_cleaned = df_cleaned.drop('corrected_date', axis=1)
+
+# Verify your cleaning worked
+print("Final dataset info:")
+print(f"Shape: {df_cleaned.shape}")
+print(f"Missing values: {df_cleaned.isnull().sum().sum()}")
+print(f"Duplicate order_ids: {df_cleaned['order_id'].duplicated().sum()}")
+print(f"Date type: {df_cleaned['order_date'].dtype}")
+print(f"Negative quantities: {(df_cleaned['quantity'] < 0).sum()}")
