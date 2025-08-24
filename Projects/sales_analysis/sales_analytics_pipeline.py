@@ -92,3 +92,18 @@ conn = sqlite3.connect('sales.db')
 
 ## creating sales data table in sales database
 df_cleaned.to_sql('sales_data',conn,if_exists='replace',index=False)
+
+## Create a cursor object
+
+# Quick verification - check row count
+cursor = conn.cursor()
+cursor.execute("SELECT COUNT(*) FROM sales_data")
+row_count = cursor.fetchone()[0]
+print(f"📊 Rows in database: {row_count}")
+
+# Check the table structure that pandas created
+cursor.execute("PRAGMA table_info(sales_data)")
+columns = cursor.fetchall()
+print("\n📋 Table structure:")
+for col in columns:
+    print(f"  {col[1]} - {col[2]}")  # column name - data type
