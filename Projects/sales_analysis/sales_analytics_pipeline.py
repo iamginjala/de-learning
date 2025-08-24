@@ -89,3 +89,6 @@ print(f"Negative quantities: {(df_cleaned['quantity'] < 0).sum()}")
 ## 3. Database connection 
 
 conn = sqlite3.connect('sales.db')
+
+## creating sales data table in sales database
+df_cleaned.to_sql('sales_data',conn,if_exists='replace',index=False)
