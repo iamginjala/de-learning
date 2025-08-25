@@ -136,15 +136,23 @@ cursor = conn.cursor()
 # print(reg_perf_result)
 
 # Who are our top-performing sales reps?
-top_performer = "SELECT sales_rep, sum(total_sales) as tot_sal from sales_data " \
-                "Group by sales_rep order by tot_sal desc"
-top_performer_result = pd.read_sql(top_performer,conn)
-print(top_performer_result)
+# top_performer = "SELECT sales_rep, sum(total_sales) as tot_sal from sales_data " \
+#                 "Group by sales_rep order by tot_sal desc"
+# top_performer_result = pd.read_sql(top_performer,conn)
+# print(top_performer_result) 
 
 # Intermediate Questions:
 
 # What's the average order value by category?
+# avg_order_query = "select category,strftime('%Y', order_date) as year,avg(total_sales) as avg_value from sales_data" \
+#                   " Group by 1,2 order by avg_value desc"
+# avg_order_query_result = pd.read_sql(avg_order_query,conn)
+# print(avg_order_query_result)
 # Which customers buy the most frequently?
+cust_query = "SELECT CUSTOMER_ID ,count(*) AS PURCHASE_COUNT FROM sales_data " \
+"WHERE customer_id != 'Guest' GROUP BY customer_id ORDER BY PURCHASE_COUNT DESC"
+cust_query_result = pd.read_sql(cust_query,conn)
+print(cust_query_result)
 # Are there seasonal patterns in our sales?
 # What's the breakdown of sales vs refunds?
 
