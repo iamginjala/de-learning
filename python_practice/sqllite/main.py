@@ -1,4 +1,13 @@
 from flask import Flask, render_template, request, redirect, url_for
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm import DeclarativeBase,Mapped,mapped_column
+from sqlalchemy import Integer, String, Float
+
+class Base(DeclarativeBase):
+  pass
+
+db = SQLAlchemy(model_class=Base)
+
 
 '''
 Red underlines? Install the required packages first: 
@@ -14,22 +23,37 @@ This will install the packages from requirements.txt for this project.
 '''
 
 app = Flask(__name__)
+# configure the SQLite database, relative to the app instance folder
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///new-books-collection.db"
+# initialize the app with the extension
+db.init_app(app)
+
+
+class Books(db.Model):
+    id: Mapped[int] = mapped_column(primary_key=True,autoincrement=True)
+    title: Mapped[str] = mapped_column(unique=True)
+    author: Mapped[str] = mapped_column(nullable=False)
+    rating: Mapped[float] = mapped_column(nullable=False)
+
+with app.app_context():
+    db.create_all()
+
 
 all_books = []
 
 
 @app.route('/')
 def home():
-    return render_template("index.html",all_books = all_books)
+    books = db.session.execute(db.select(Books).order_by(Books.id)).scalars()
+    return render_template("index.html",all_books = books)
 
 
 @app.route("/add",methods=['POST','GET'])
 def add():
     if request.method == 'POST':
-        tit = request.form['book_name']
-        aut  = request.form['book_author']
-        rate = request.form['rating']
-        all_books.append({'title':tit,'author':aut,'rating':rate})
+        book = Books(title = request.form['book_name'],author  = request.form['book_author'],rating = request.form['rating'])
+        db.session.add(book)
+        db.session.commit()
         return redirect(url_for('home')) 
     return render_template("add.html")
 
