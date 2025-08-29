@@ -9,7 +9,7 @@
     {%if all_books %}
     {% for book in all_books%}
     <ul>
-      <li>{{book['title']}}- {{book['author']}}- {{book['rating']}}</li>
+      <li>{{book['title']}}- {{book['author']}}- {{book['rating']}} <a href="{{url_for('edit')}}">edit rating</a></li>
     </ul>
     {% endfor %}
     {% else %}
