@@ -5,11 +5,11 @@
     <title>Edit Rating</title>
   </head>
   <body>
-    <form action="/edit" method="POST">
-      <label>Book Name: {{book['title'] }}</label>  
-      <label>Current Rating: {{book['rating']}}</label>
-      <input type="text" name="New rating"/>
-      <button type="submit">submit rating</button>
+    <form action="/edit/{{book.id}}" method="POST">
+      <ul><label>Book Name: {{book['title'] }}</label></ul>  
+      <ul><label>Current Rating: {{book['rating']}}</label></ul>
+      <ul><input type="text" name="New rating"/></ul>
+      <ul><button type="submit">submit rating</button></ul>
     </form>
   </body>
 </html>
