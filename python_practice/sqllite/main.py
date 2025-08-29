@@ -59,8 +59,19 @@ def add():
 
 @app.route("/edit/<id>",methods=['POST','GET'])
 def edit(id):
-    books_by_id = db.session.execute(db.select(Books).where(Books.id == id)).scalar()
-    return render_template('edit.html',all_books = books_by_id)
+    book = db.session.execute(db.select(Books).where(Books.id == id)).scalar()
+    if request.method == 'POST':
+        new_rating = request.form['new_rating']
+        book.rating = new_rating
+        db.session.commit()
+        return redirect(url_for('home'))
+    return render_template('edit.html',book = book)
+@app.route("/delete/<id>")
+def delete(id):
+    book = db.session.execute(db.select(Books).where(Books.id == id)).scalar()
+    db.session.delete(book)
+    db.session.commit()
+    return redirect(url_for('home'))
 
 if __name__ == "__main__":
     app.run(debug=True)
