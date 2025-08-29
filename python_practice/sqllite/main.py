@@ -57,6 +57,10 @@ def add():
         return redirect(url_for('home')) 
     return render_template("add.html")
 
+@app.route("/edit/<id>",methods=['POST','GET'])
+def edit(id):
+    books_by_id = db.session.execute(db.select(Books).where(Books.id == id)).scalar()
+    return render_template('edit.html',all_books = books_by_id)
 
 if __name__ == "__main__":
     app.run(debug=True)
