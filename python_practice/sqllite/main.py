@@ -61,7 +61,7 @@ def add():
 def edit(id):
     book = db.session.execute(db.select(Books).where(Books.id == id)).scalar()
     if request.method == 'POST':
-        new_rating = request.form['new_rating']
+        new_rating = request.form['New rating']
         book.rating = new_rating
         db.session.commit()
         return redirect(url_for('home'))
