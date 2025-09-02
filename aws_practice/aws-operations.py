@@ -46,8 +46,6 @@ try:
     client.download_file('demo-boto3-bucket-harsha-de','hello.txt',full_path)
     print(f'file downloaded sucessfully to path {os.path.exists(full_path)}')
 
-except ClientError as e:
-    print(f"❌ AWS Error: {e}")
 except FileNotFoundError:
     print(f"local directory doesn't exist {folder}")
 except Exception as e:
